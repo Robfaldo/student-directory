@@ -30,12 +30,16 @@ end
 
 def print_footer(names)
   i = 1
-  names.each do |name|
-    if name[:name].length < 12
-      puts "#{i}. #{name[:name]}"
+  name_index = 0
+  while name_index < names.length
+    
+    if names[name_index][:name].length < 12
+      puts "#{i}. #{names[name_index][:name]}"
       i += 1
     end
+    name_index += 1
   end
+
 end
 
 current_student_directory = input_students
