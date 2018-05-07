@@ -91,7 +91,7 @@ def print_footer(names)
   while name_index < names.length
     
     if names[name_index][:name].length < 12
-      puts "#{i}. #{names[name_index][:name]}"
+      puts "#{i}. #{names[name_index][:name]} who is #{names[name_index][:age]} years old!"
       i += 1
     end
     name_index += 1
