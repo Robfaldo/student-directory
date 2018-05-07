@@ -1,5 +1,18 @@
 # First we print the list of students
 
+def get_user_input(question_string)
+  puts question_string
+  while true 
+    new_input = gets.chomp
+
+    if new_input.empty? 
+      break
+    else
+      return new_input
+    end
+  end 
+end
+
 def input_students 
   students = []
   puts "Enter new student name, to finish hit return twice: "
@@ -12,6 +25,7 @@ def input_students
     else
       students << {name: new_name, cohort: :november} 
     end
+
   end
   return students 
 end
