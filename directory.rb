@@ -31,15 +31,17 @@ end
 
 def create_new_student
 
-  # @rtype: 
-
-  user_input = gets.chomp 
+  puts "Enter student name: "
+  user_input = gets.chomp.capitalize
 
   if user_input.empty? 
     return "stop"
   else
     student = Student.new(user_input)
   end
+
+  puts "How old is #{student.return_name}? "
+  student.age(gets.chomp)
 
   return student
 end
@@ -52,7 +54,6 @@ def input_students
   # array of hash tables to store each student. 
   students = []
 
-  puts "Enter student name"
 
   while true
     current_student = create_new_student
@@ -60,7 +61,7 @@ def input_students
     if current_student == "stop"
       break
     else
-      students << { name: current_student.return_name }
+      students << { name: current_student.return_name, age: current_student.return_age }
     end
   end
 
