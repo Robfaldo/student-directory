@@ -23,13 +23,14 @@ def print_header
 end 
 
 def print(names)
-  names.each do |name|
+    names.each do |name|
     puts "#{name[:name]}, (#{name[:cohort]} cohort)" 
   end
 end 
 
 def print_footer(names)
-  list_to_print = names.each_with_index { |val,index| puts "#{index}. #{val[:name]}"}  
+  puts "Overall, we have #{names.count} great students"
+  list_to_print = names.each_with_index { |val,index| puts "#{index +1}. #{val[:name]}" }  
 end
 
 current_student_directory = input_students
