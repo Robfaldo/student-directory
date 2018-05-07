@@ -1,32 +1,43 @@
 # First we print the list of students
 
-def get_user_input(question_string)
-  puts question_string
-  while true 
-    new_input = gets.chomp
+def get_user_input
+  # Asks the user for a string, repeats until a blank line is entered. Returns the string 
+  # given unless a blank line is returned where it will return "stop" 
+  # @rtype: string 
+  # >>> get_user_input 
+  # Ben 
+  # >>> get_user_input 
+  # stop 
+  # puts question_string
 
-    if new_input.empty? 
-      break
-    else
-      return new_input
-    end
-  end 
+  user_input = gets.chomp 
+
+  if user_input.empty? 
+    return "stop"
+  else
+    return user_input
+  end
 end
 
+
+
+
 def input_students 
+
+  # array of hash tables to store each student. 
   students = []
+
   puts "Enter new student name, to finish hit return twice: "
 
-  while true 
-    new_name = gets.chomp.capitalize
-
-    if new_name.empty?
+  while true
+    input = get_user_input
+    if input == "stop"
       break
     else
-      students << {name: new_name, cohort: :november} 
+      students << { name: input }
     end
-
   end
+
   return students 
 end
 
