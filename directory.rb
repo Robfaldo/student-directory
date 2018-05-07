@@ -29,8 +29,16 @@ def print(names)
 end 
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
-  list_to_print = names.each_with_index { |val,index| puts "#{index +1}. #{val[:name]}" }  
+  starts_b = 0 
+  names.each { |name| starts_b += name[:name][0] == "B" ? 1 : 0 }
+  puts "Overall, we have #{starts_b} great students"
+  i = 1
+  names.each do |name|
+    if name[:name][0] == "B"
+      puts "#{i}. #{name[:name]}"
+      i += 1
+    end
+  end
 end
 
 current_student_directory = input_students
