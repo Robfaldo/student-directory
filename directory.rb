@@ -13,8 +13,6 @@ def input_students
       students << {name: new_name, cohort: :november} 
     end
   end
-
-  p students
   return students 
 end
 
@@ -32,6 +30,11 @@ end
 
 def print_footer(names)
   puts "Overall, we have #{names.count} great students"
+  i = 1
+  names.each do |name|
+    puts "#{i}. #{name[:name].to_s}"
+    i += 1
+  end
 end
 
 current_student_directory = input_students
