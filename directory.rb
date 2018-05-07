@@ -29,12 +29,9 @@ def print(names)
 end 
 
 def print_footer(names)
-  starts_b = 0 
-  names.each { |name| starts_b += name[:name][0] == "B" ? 1 : 0 }
-  puts "Overall, we have #{starts_b} great students"
   i = 1
   names.each do |name|
-    if name[:name][0] == "B"
+    if name[:name].length < 12
       puts "#{i}. #{name[:name]}"
       i += 1
     end
