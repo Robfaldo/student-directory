@@ -1,22 +1,47 @@
 # First we print the list of students
 
-def get_user_input
-  # Asks the user for a string, repeats until a blank line is entered. Returns the string 
-  # given unless a blank line is returned where it will return "stop" 
-  # @rtype: string 
-  # >>> get_user_input 
-  # Ben 
-  # >>> get_user_input 
-  # stop 
-  # puts question_string
+# create a student class, with variables for name, age, height, nationality 
+# until the user quits, prompt the user to create 
+# prompt the user for input and assign it to
+# use that input to set the variables of the instance of student 
+# return the 
+
+
+class Student 
+  def initialize(name) #, cohort, height, nationality)
+    @name = name
+    #@cohort = cohort.to_sym
+    #@height = height
+    #@nationality = nationality
+  end 
+
+  def return_name 
+    return @name.capitalize 
+  end
+
+  def age(age)
+    @age = age
+  end
+
+  def return_age
+    return @age
+  end
+end
+
+
+def create_new_student
+
+  # @rtype: 
 
   user_input = gets.chomp 
 
   if user_input.empty? 
     return "stop"
   else
-    return user_input
+    student = Student.new(user_input)
   end
+
+  return student
 end
 
 
@@ -27,17 +52,23 @@ def input_students
   # array of hash tables to store each student. 
   students = []
 
-  puts "Enter new student name, to finish hit return twice: "
+  puts "Enter student name"
 
   while true
-    input = get_user_input
-    if input == "stop"
+    current_student = create_new_student
+
+    if current_student == "stop"
       break
     else
-      students << { name: input }
+      students << { name: current_student.return_name }
     end
   end
 
+  puts "Enter student age" 
+
+
+
+  p students
   return students 
 end
 
