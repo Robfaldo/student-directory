@@ -29,12 +29,7 @@ def print(names)
 end 
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
-  i = 1
-  names.each do |name|
-    puts "#{i}. #{name[:name].to_s}"
-    i += 1
-  end
+  list_to_print = names.each_with_index { |val,index| puts "#{index}. #{val[:name]}"}  
 end
 
 current_student_directory = input_students
