@@ -104,17 +104,22 @@ def print(names)
 end 
 
 def print_footer(names)
-  i = 1
-  name_index = 0
-  while name_index < names.length
-    
-    if names[name_index][:name].length < 12
-      list = "#{i}. #{names[name_index][:name]} who is #{names[name_index][:age]} years old! Hes in the #{names[name_index][:cohort]} cohort"
-      puts list.center(15)
-      i += 1
+
+  # print each cohort
+  valid_months = [:january, :february, :march, :april, :may, :june, :july, :august, 
+    :september, :october, :november, :december]
+  this_months_cohort = []
+
+  # I want to go through the months, and at each month I want to see if there are are students
+  # in the names array that have the key/value pair m:cohort/month. If so, puts it 
+
+  valid_months.each do |month|
+    names.each do |student|
+      p "names[student] is #{names[student]} "
+      p "month is #{month} " 
     end
-    name_index += 1
   end
+
 
 end
 
