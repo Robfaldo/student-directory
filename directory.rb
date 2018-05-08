@@ -31,7 +31,7 @@ end
 def create_new_student
 
   puts "Enter student name: "
-  name = gets.chomp.capitalize
+  name = gets.capitalize.gsub("\n","")
 
   if name.empty? 
     return "stop"
