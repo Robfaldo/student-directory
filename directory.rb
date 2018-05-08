@@ -1,3 +1,5 @@
+@students = []
+
 # Create a student class with variables 
 class Student 
   attr_accessor :age, :height, :nationality
@@ -74,7 +76,6 @@ end
 def input_students 
 
   # array of hash tables to store each student. 
-  students = []
 
   # unless user stops entering names, prompt the user to create a new student and store 
   # the instance of the student class in an array of students 
@@ -84,11 +85,11 @@ def input_students
     if current_student == "stop"
       break
     else
-      students << { name: current_student.return_name, age: current_student.age, height: current_student.height, nationality: current_student.nationality, cohort: current_student.return_cohort }
+      @students << { name: current_student.return_name, age: current_student.age, height: current_student.height, nationality: current_student.nationality, cohort: current_student.return_cohort }
     end
   end
 
-  return students 
+  return @students 
 end
 
 
@@ -136,13 +137,12 @@ def print_menu
   puts "9. Exit"
 end
 
-def show_students(students) 
+def show_students
   print_header
-  print_footer(students)
+  print_footer(@students)
 end
 
 def interactive_menu
-  students = []
 
   loop do 
     # 1. print the menu and ask the user what to do. Add student, 
@@ -154,9 +154,9 @@ def interactive_menu
     # 3. do what the user has asked
     case user_input
     when "1"
-      students = input_students
+      @students = input_students
     when "2"
-      show_students(students)
+      show_students
     when "9"
       exit
     else
