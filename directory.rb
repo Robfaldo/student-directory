@@ -97,6 +97,7 @@ def print_header
   puts "----------"
 end 
 
+
 def print(names)
     names.each do |name|
     puts "#{name[:name]}, (#{name[:cohort]} cohort)" 
@@ -105,6 +106,8 @@ end
 
 def print_footer(names)
 
+  puts "We have #{names.count} #{names.count > 1 || names.count == 0 ? "students" : "student"}!" 
+  
   # print each cohort
   valid_months = [:january, :february, :march, :april, :may, :june, :july, :august, 
     :september, :october, :november, :december]
