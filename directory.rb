@@ -20,20 +20,17 @@ end
 
 def is_valid_cohort(cohort)
   # If the cohort value is a month then return true, else return false 
-  # @type: string
-  # @rtype bool 
   valid_months = [:january, :february, :march, :april, :may, :june, :july, :august, 
   :september, :october, :november, :december]
 
   return valid_months.include?(cohort)
-
 end
 
 
 def create_new_student
 
   puts "Enter student name: "
-  name = gets.capitalize.gsub("\n","")
+  name = gets.chomp.capitalize
 
   if name.empty? 
     return "stop"
@@ -95,39 +92,31 @@ end
 
 def print_header
   puts "The students of Villains Academy"
-  puts "----------"
+  puts "-------------------"
 end 
 
 
-def print(names)
-    names.each do |name|
-    puts "#{name[:name]}, (#{name[:cohort]} cohort)" 
-  end
-end 
-
-def print_footer(names)
-
-  puts "We have #{names.count} #{names.count > 1 || names.count == 0 ? "students" : "student"}!" 
-  
+def print_student_list
   valid_months = [:january, :february, :march, :april, :may, :june, :july, :august, 
     :september, :october, :november, :december]
   this_months_cohort = []
   index_counter = 1
 
-  # go through the months, and at each month I want to see if there are are students
-  # in the names array that have the key/value pair m:cohort/month. If so, puts it 
-
-  unless names.count == 0  
+  unless @students.count == 0  
 
     valid_months.each do |month|
-      names.each_with_index do |student, index|
-        if names[index][:cohort] == month.to_sym
-          puts "#{index_counter}. #{names[index][:name]} is in the #{names[index][:cohort]} cohort!"
+      @students.each_with_index do |student, index|
+        if @students[index][:cohort] == month.to_sym
+          puts "#{index_counter}. #{@students[index][:name]} is in the #{@students[index][:cohort]} cohort!"
           index_counter += 1 
         end 
       end
     end
   end
+end 
+
+def print_footer
+  puts "We have #{@students.count} #{@students.count > 1 || @students.count == 0 ? "students" : "student"}!" 
   puts "-------------------"
 end
 
@@ -139,20 +128,12 @@ end
 
 def show_students
   print_header
-  print_footer(@students)
+  print_student_list
+  print_footer
 end
 
-def interactive_menu
-
-  loop do 
-    # 1. print the menu and ask the user what to do. Add student, 
-    print_menu
-
-    # 2. read the input and save it into a variable
-    user_input = gets.chomp.downcase
-
-    # 3. do what the user has asked
-    case user_input
+def selection(process)
+  case process
     when "1"
       @students = input_students
     when "2"
@@ -162,6 +143,13 @@ def interactive_menu
     else
       puts "I don't know what you mean, try again"
     end
+end
+
+def interactive_menu
+  loop do 
+    print_menu
+    # Ask user what opton in the menu they'd like to do and execute 
+    selection(gets.chomp)
   end
 end
 
