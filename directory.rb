@@ -108,7 +108,6 @@ def print_footer(names)
 
   puts "We have #{names.count} #{names.count > 1 || names.count == 0 ? "students" : "student"}!" 
   
-  # print each cohort
   valid_months = [:january, :february, :march, :april, :may, :june, :july, :august, 
     :september, :october, :november, :december]
   this_months_cohort = []
@@ -116,15 +115,18 @@ def print_footer(names)
 
   # go through the months, and at each month I want to see if there are are students
   # in the names array that have the key/value pair m:cohort/month. If so, puts it 
-  valid_months.each do |month|
-    names.each_with_index do |student, index|
-      if names[index][:cohort] == month.to_sym
-        puts "#{index_counter}. #{names[index][:name]} is in the #{names[index][:cohort]} cohort!"
-        index_counter += 1 
-      end 
+
+  unless names.count == 0  
+
+    valid_months.each do |month|
+      names.each_with_index do |student, index|
+        if names[index][:cohort] == month.to_sym
+          puts "#{index_counter}. #{names[index][:name]} is in the #{names[index][:cohort]} cohort!"
+          index_counter += 1 
+        end 
+      end
     end
   end
-
 
 end
 
