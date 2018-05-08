@@ -142,6 +142,7 @@ def save_students
     csv_line = student_data.join(",")
     file.puts csv_line
   end
+  file.close
 end 
 
 def selection(process)
