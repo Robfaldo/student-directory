@@ -1,12 +1,44 @@
 @students = []
 
-def load_students
+def load_students(filename = "students.csv")
   file = File.open("students.csv", "r")
   file.readlines.each do |line| 
-    name, cohort = line.chomp.split(",")
-      @students << {name: name, cohort: cohort.to_sym}
+    name, cohort, age, height, nationality = line.chomp.split(",")
+      @students << {name: name, cohort: cohort.to_sym, age: age, height: height, nationality: nationality}
   end
   file.close
+end
+
+def input_students 
+  while true
+    current_student = create_new_student
+
+    if current_student == "stop"
+      break
+    else
+      @students << { name: current_student.return_name, age: current_student.age, height: current_student.height, nationality: current_student.nationality, cohort: current_student.return_cohort }
+    end
+  end
+
+  #def add_students_array(name, age, cohort, height, nationality)
+  #  @students << {name: name, age: age, cohort: cohort, height: height, nationality: nationality}
+  #end
+
+  return @students 
+end
+
+def try_load_students
+  filename = ARGV.first
+  puts "filename IS"
+  puts filename
+  return if filename.nil? # get out of the method if it isn't given
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else # if it doesn't exists 
+    puts "Sorry, #{filename} doesn't exist."
+    exit # quit the program
+  end
 end
 
 # Create a student class with variables 
@@ -39,39 +71,39 @@ end
 def create_new_student
 
   puts "Enter student name: "
-  name = gets.chomp.capitalize
+  name = $stdin.gets.chomp.capitalize
 
   if name.empty? 
     return "stop"
   end
 
   puts "What cohort is #{name} in?"
-  cohort = gets.chomp.downcase.to_sym
+  cohort = $stdin.gets.chomp.downcase.to_sym
 
 
   # check cohort is valid and set to default if not & prompt user if they'd like to try again
   until is_valid_cohort(cohort)
     cohort = :november
     puts "No matching cohort, default set to november. Are you sure you'd like to submit (type yes/no)?"
-    wants_to_submit_anyway = gets.chomp.downcase 
+    wants_to_submit_anyway = $stdin.gets.chomp.downcase 
 
     if wants_to_submit_anyway == "yes"
       break
     else
-      cohort = gets.chomp.downcase.to_sym
+      cohort = $stdin.gets.chomp.downcase.to_sym
     end
   end 
 
   student = Student.new(name, cohort)
 
   puts "How old is #{student.return_name}? "
-  student.age = gets.chomp
+  student.age = $stdin.gets.chomp
 
   puts "How tall is #{student.return_name} in cm's?"
-  student.height = gets.chomp
+  student.height = $stdin.gets.chomp
 
   puts "What nationality is #{student.return_name}?"
-  student.nationality = gets.chomp
+  student.nationality = $stdin.gets.chomp
 
   return student
 end
@@ -117,6 +149,8 @@ def print_student_list
       @students.each_with_index do |student, index|
         if @students[index][:cohort] == month.to_sym
           puts "#{index_counter}. #{@students[index][:name]} is in the #{@students[index][:cohort]} cohort!"
+          puts "     Personal description: They are #{@students[index][:nationality]} and #{@students[index][:height]} 
+          cm's tall and #{@students[index][:age]} years old"
           index_counter += 1 
         end 
       end
@@ -134,7 +168,6 @@ def print_menu
   puts "2. Show the students"
   puts "3. Save students"
   puts "4. Load students"
-  puts "9. Exit"
 end
 
 def show_students
@@ -143,17 +176,19 @@ def show_students
   print_footer
 end
 
-def save_students 
+def save_students(filename = "students.csv")
   # Open the file for writing 
-  file = File.open("students.csv", "w")
+  file = File.open(filename, "w")
   # iterate over the array of students 
   @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
+    student_data = [student[:name], student[:cohort], student[:age], student[:height], student[:nationality]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
   file.close
 end 
+
+
 
 
 def selection(process)
@@ -177,10 +212,11 @@ def interactive_menu
   loop do 
     print_menu
     # Ask user what opton in the menu they'd like to do and execute 
-    selection(gets.chomp)
+    selection($stdin.gets.chomp)
   end
 end
 
+try_load_students
 interactive_menu
 # current_student_directory = input_students
 #print_header
