@@ -1,10 +1,15 @@
 @students = []
 
+def add_students_array(name, age, cohort, height, nationality)
+  @students << {name: name, age: age, cohort: cohort.to_sym, height: height, nationality: nationality}
+end
+
 def load_students(filename = "students.csv")
   file = File.open("students.csv", "r")
   file.readlines.each do |line| 
     name, cohort, age, height, nationality = line.chomp.split(",")
-      @students << {name: name, cohort: cohort.to_sym, age: age, height: height, nationality: nationality}
+    add_students_array(name, age, cohort, height, nationality)
+    p line
   end
   file.close
 end
@@ -16,13 +21,10 @@ def input_students
     if current_student == "stop"
       break
     else
-      @students << { name: current_student.return_name, age: current_student.age, height: current_student.height, nationality: current_student.nationality, cohort: current_student.return_cohort }
+      add_students_array(current_student.return_name, current_student.age, current_student.height, current_student.nationality, current_student.return_cohort)
     end
   end
 
-  #def add_students_array(name, age, cohort, height, nationality)
-  #  @students << {name: name, age: age, cohort: cohort, height: height, nationality: nationality}
-  #end
 
   return @students 
 end
