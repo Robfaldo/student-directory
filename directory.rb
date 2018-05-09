@@ -1,30 +1,29 @@
 @students = []
 
 def add_students_array(name, age, cohort, height, nationality)
-  @students << {name: name, age: age, cohort: cohort.to_sym, height: height, nationality: nationality}
+  @students << {name: name, cohort: cohort, age: age, height: height, nationality: nationality}
 end
 
 def load_students(filename = "students.csv")
   file = File.open("students.csv", "r")
   file.readlines.each do |line| 
     name, cohort, age, height, nationality = line.chomp.split(",")
-    add_students_array(name, age, cohort, height, nationality)
+    add_students_array(name, age, cohort.to_sym, height, nationality)
   end
   file.close
 end
 
 def input_students 
+  # unless user stops entering names, prompt the user to create a new student and store 
+  # the instance of the student class in an array of students 
   while true
     current_student = create_new_student
-
     if current_student == "stop"
       break
     else
-      add_students_array(current_student.return_name, current_student.age, current_student.height, current_student.nationality, current_student.return_cohort)
+      add_students_array(current_student.return_name, current_student.age, current_student.return_cohort, current_student.height, current_student.nationality)
     end
   end
-
-
   return @students 
 end
 
@@ -112,24 +111,6 @@ end
 
 
 
-def input_students 
-
-  # array of hash tables to store each student. 
-
-  # unless user stops entering names, prompt the user to create a new student and store 
-  # the instance of the student class in an array of students 
-  while true
-    current_student = create_new_student
-
-    if current_student == "stop"
-      break
-    else
-      @students << { name: current_student.return_name, age: current_student.age, height: current_student.height, nationality: current_student.nationality, cohort: current_student.return_cohort }
-    end
-  end
-
-  return @students 
-end
 
 
 def print_header
@@ -188,8 +169,6 @@ def save_students(filename = "students.csv")
   end
   file.close
 end 
-
-
 
 
 def selection(process)
