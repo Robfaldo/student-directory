@@ -67,25 +67,51 @@ def is_valid_cohort(cohort)
   return valid_months.include?(cohort)
 end
 
-
-def create_new_student
-
+def ask_name
   puts "Enter student name: "
   name = $stdin.gets.chomp.capitalize
+  return name
+end
+
+def ask_cohort(name)
+  puts "What cohort is #{name} in?"
+  cohort = $stdin.gets.chomp.downcase.to_sym
+end
+
+def ask_age(student)
+  puts "How old is #{student.return_name}? "
+  student.age = $stdin.gets.chomp
+end
+
+def ask_height(student)
+  puts "How tall is #{student.return_name} in cm's?"
+  student.height = $stdin.gets.chomp
+end
+
+def get_nationality(student)
+  puts "What nationality is #{student.return_name}?"
+  student.nationality = $stdin.gets.chomp
+end
+
+def like_to_continue 
+  puts "No matching cohort, default set to november. Are you sure you'd like to submit (type yes/no)?"
+  wants_to_submit_anyway = $stdin.gets.chomp.downcase 
+end
+
+
+def create_new_student
+  name = ask_name
 
   if name.empty? 
     return "stop"
   end
 
-  puts "What cohort is #{name} in?"
-  cohort = $stdin.gets.chomp.downcase.to_sym
-
+  cohort = ask_cohort(name)
 
   # check cohort is valid and set to default if not & prompt user if they'd like to try again
   until is_valid_cohort(cohort)
     cohort = :november
-    puts "No matching cohort, default set to november. Are you sure you'd like to submit (type yes/no)?"
-    wants_to_submit_anyway = $stdin.gets.chomp.downcase 
+    wants_to_submit_anyway = like_to_continue
 
     if wants_to_submit_anyway == "yes"
       break
@@ -94,34 +120,30 @@ def create_new_student
     end
   end 
 
+  #create an instance of Student class with name & cohort given above
   student = Student.new(name, cohort)
-
-  puts "How old is #{student.return_name}? "
-  student.age = $stdin.gets.chomp
-
-  puts "How tall is #{student.return_name} in cm's?"
-  student.height = $stdin.gets.chomp
-
-  puts "What nationality is #{student.return_name}?"
-  student.nationality = $stdin.gets.chomp
+  # get the remaining details about new student 
+  age = ask_age(student)
+  height = ask_height(student)
+  nationality = get_nationality(student)
 
   return student
 end
-
-
-
-
-
 
 def print_header
   puts "The students of Villains Academy"
   puts "-------------------"
 end 
 
-
-def print_student_list
+def valid_months_list 
   valid_months = [:january, :february, :march, :april, :may, :june, :july, :august, 
     :september, :october, :november, :december]
+    return valid_months
+end
+
+
+def print_student_list
+  valid_months = valid_months_list
   this_months_cohort = []
   index_counter = 1
 
