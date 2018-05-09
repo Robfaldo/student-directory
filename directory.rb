@@ -11,6 +11,7 @@ def load_students(filename = "students.csv")
     add_students_array(name, age, cohort.to_sym, height, nationality)
   end
   file.close
+  puts "Students successfully loaded, we now have #{@students.count} students!"
 end
 
 def input_students 
@@ -33,8 +34,8 @@ def try_load_students
     filename = "students.csv"
   end
   if File.exists?(filename)
+    puts "#{filename} exists, continuing to load students..."
     load_students(filename)
-    puts "Loaded #{@students.count} from #{filename}"
   else # if it doesn't exists 
     puts "Sorry, #{filename} doesn't exist."
     exit # quit the program
@@ -103,6 +104,7 @@ def create_new_student
   name = ask_name
 
   if name.empty? 
+    puts "Thank you for entering students!"
     return "stop"
   end
 
@@ -178,6 +180,7 @@ def show_students
   print_header
   print_student_list
   print_footer
+  puts "Student list loaded successfully!"
 end
 
 def save_students(filename = "students.csv")
@@ -190,6 +193,7 @@ def save_students(filename = "students.csv")
     file.puts csv_line
   end
   file.close
+  puts "Students saved successfully!, we now have #{@students.count} students"
 end 
 
 
