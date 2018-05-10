@@ -5,7 +5,7 @@ def add_students_array(name, age, cohort, height, nationality)
 end
 
 def load_students(filename = "students.csv")
-  file = File.open("students.csv", "r")
+  file = File.open(filename, "r")
   file.readlines.each do |line| 
     name, cohort, age, height, nationality = line.chomp.split(",")
     add_students_array(name, age, cohort.to_sym, height, nationality)
@@ -13,6 +13,37 @@ def load_students(filename = "students.csv")
   file.close
   puts "Students successfully loaded, we now have #{@students.count} students!"
 end
+
+def get_file_from_user
+  puts "Enter file name"
+  file = gets.chomp
+
+  if File.exists?(file)
+    return file
+  else 
+    return false 
+  end
+end 
+
+def save_students(filename = "students.csv")
+  # Open the file for writing 
+  file = File.open(filename, "w")
+
+  unless get_file_from_user == false
+    file = File.open(get_file_from_user,"w")
+    puts "changed file"
+  end
+
+  # iterate over the array of students 
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort], student[:age], student[:height], student[:nationality]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
+  file.close
+  puts "Students saved successfully!, we now have #{@students.count} students"
+end 
+
 
 def input_students 
   # unless user stops entering names, prompt the user to create a new student and store 
@@ -182,19 +213,6 @@ def show_students
   print_footer
   puts "Student list loaded successfully!"
 end
-
-def save_students(filename = "students.csv")
-  # Open the file for writing 
-  file = File.open(filename, "w")
-  # iterate over the array of students 
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort], student[:age], student[:height], student[:nationality]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
-  end
-  file.close
-  puts "Students saved successfully!, we now have #{@students.count} students"
-end 
 
 
 def selection(process)
