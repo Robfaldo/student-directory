@@ -1,25 +1,11 @@
 @students = []
-@filename = "students.csv"
 
 def add_students_array(name, age, cohort, height, nationality)
   @students << {name: name, cohort: cohort, age: age, height: height, nationality: nationality}
 end
 
-def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line| 
-    name, cohort, age, height, nationality = line.chomp.split(",")
-    add_students_array(name, age, cohort.to_sym, height, nationality)
-  end
-  file.close
-  puts "Students successfully loaded, we now have #{@students.count} students!"
-end
-
-# When the user saves, prompt him for the name of the file to save to 
-# If the name exists, then contine with that file 
-
 def get_file_from_user
-  puts "Enter file name you'd like to save to"
+  puts "Enter file name (or else it will default to students.csv)"
   this_file = gets.chomp
 
   if File.exists?(this_file)
@@ -29,6 +15,24 @@ def get_file_from_user
     return false 
   end
 end 
+
+def load_students(filename = "students.csv")
+  new_file = get_file_from_user
+  file = File.open(filename, "r")
+
+  unless new_file == false
+    file.close
+    file = File.open(new_file, "r")
+  end
+
+
+  file.readlines.each do |line| 
+    name, cohort, age, height, nationality = line.chomp.split(",")
+    add_students_array(name, age, cohort.to_sym, height, nationality)
+  end
+  file.close
+  puts "Students successfully loaded, we now have #{@students.count} students!"
+end
 
 def save_students(filename = "students.csv")
   # Open the file for writing 
