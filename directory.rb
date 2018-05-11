@@ -16,21 +16,24 @@ def get_file_from_user
   end
 end 
 
+def load_file(file)
+  File.open(file, "r") do |this_file| 
+    this_file.readlines.each do |line| 
+      name, cohort, age, height, nationality = line.chomp.split(",")
+      add_students_array(name, age, cohort.to_sym, height, nationality)
+    end
+  end
+end
+
 def load_students(filename = "students.csv")
   new_file = get_file_from_user
-  file = File.open(filename, "r")
 
-  unless new_file == false
-    file.close
-    file = File.open(new_file, "r")
+  if new_file == false 
+    load_file(filename)
+  else
+    load_file(new_file)
   end
-
-
-  file.readlines.each do |line| 
-    name, cohort, age, height, nationality = line.chomp.split(",")
-    add_students_array(name, age, cohort.to_sym, height, nationality)
-  end
-  file.close
+    
   puts "Students successfully loaded, we now have #{@students.count} students!"
 end
 
