@@ -8,6 +8,7 @@ def get_file_from_user
   puts "Enter file name (or else it will default to students.csv)"
   this_file = gets.chomp
 
+
   if File.exists?(this_file)
     puts File.basename(this_file)
     return File.basename(this_file)
@@ -37,29 +38,26 @@ def load_students(filename = "students.csv")
   puts "Students successfully loaded, we now have #{@students.count} students!"
 end
 
+def save_file(file)
+  File.open(file, "w") do |this_file| 
+      @students.each do |student|
+        student_data = [student[:name], student[:cohort], student[:age], student[:height], student[:nationality]]
+        csv_line = student_data.join(",")
+        this_file.puts csv_line
+      end
+    end
+end
+
 def save_students(filename = "students.csv")
-  # Open the file for writing 
-
   new_file = get_file_from_user
-  file = File.open(filename, "r") 
 
-
-  if new_file == false
-    file.close
-    file = File.open(filename, "w")
-  else
-    file.close
-    file = File.open(new_file, "w")
+  if new_file == false 
+    save_file(filename)
+  else 
+    save_file(new_file)
   end
-
-  # iterate over the array of students 
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort], student[:age], student[:height], student[:nationality]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
-  end
-  file.close
   puts "Students saved successfully!, we now have #{@students.count} students"
+
 end 
 
 
