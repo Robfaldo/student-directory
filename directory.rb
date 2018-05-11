@@ -207,7 +207,7 @@ def print_student_list
         end 
       end
     end
-  end
+  endn
 end 
 
 def print_footer
